@@ -6,5 +6,6 @@
         public string UserName { get; set; } = "";
         public long Points { get; set; } = 0;
         public int Rank { get; set; } = 0;
+        public DateTime LastUpdate { get; set; } = DateTime.MinValue;
     }
 }
