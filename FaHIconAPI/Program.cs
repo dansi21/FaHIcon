@@ -9,7 +9,7 @@ namespace FaHIconAPI
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddScoped<FaHApiService>();
-
+            builder.Services.AddSingleton<DocumentDbService>();
             builder.Services.AddControllers();
 
             var app = builder.Build();
