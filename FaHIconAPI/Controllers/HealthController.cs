@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FaHIconAPI.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FaHIconAPI.Controllers
 {

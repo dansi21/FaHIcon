@@ -1,3 +1,5 @@
+using FaHIconAPI.Services;
+
 namespace FaHIconAPI
 {
     public class Program
@@ -6,7 +8,7 @@ namespace FaHIconAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            builder.Services.AddScoped<FaHApiService>();
 
             builder.Services.AddControllers();
 
