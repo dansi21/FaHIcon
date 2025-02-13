@@ -9,9 +9,8 @@ namespace FaHIconAPI.Services
 
         public DocumentDbService(IConfiguration configuration)
         {
-            var client = new MongoClient(configuration["MongoDB:ConnectionString"]);
-            var database = client.GetDatabase(configuration["MongoDB:DatabaseName"]);
-            _userDataCollection = database.GetCollection<UserData>(configuration["MongoDB:CollectionName"]);
+            MongoClient client = new MongoClient(configuration["MongoDB:ConnectionString"]);
+            IMongoDatabase database = client.GetDatabase(configuration["MongoDB:DatabaseName"]);
         }
 
         public Task<UserData> GetUserData(string userId)
