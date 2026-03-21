@@ -1,27 +1,38 @@
 ﻿using FaHIconAPI.Models;
+using Microsoft.Extensions.Caching.Memory;
+using System.Runtime.Serialization;
 using System.Text.Json;
 
 namespace FaHIconAPI.Services
 {
     public class FaHApiService
     {
-        public HttpClient client { get; set; }
+        private HttpClient _client { get; set; }
+        private IMemoryCache _cache { get; set; }
 
-        public FaHApiService()
+
+        public FaHApiService(IMemoryCache cache)
         {
-            client = new HttpClient();
+            _client = new HttpClient();
+            _cache = cache;
         }
 
         public async Task<UserDataResponse> GetUserData(string userName)
         {
-            HttpResponseMessage response = await client.GetAsync($"https://api.foldingathome.org/user/{userName}");
+            if (_cache.TryGetValue(userName, out UserDataResponse? cached) && cached is not null)
+                return cached;
+
+            HttpResponseMessage response = await _client.GetAsync($"https://api.foldingathome.org/user/{userName}");
             if (response.IsSuccessStatusCode)
             {
                 string content = await response.Content.ReadAsStringAsync();
                 UserDataResponse? user = JsonSerializer.Deserialize<UserDataResponse>(content);
+                if (user is null) throw new SerializationException("User could not be parsed");
+
+                _cache.Set(userName, user, TimeSpan.FromMinutes(5));
                 return user;
             }
-            else 
+            else
             {
                 throw new ArgumentException("User not found");
             }
