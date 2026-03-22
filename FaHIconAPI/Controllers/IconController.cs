@@ -22,27 +22,6 @@ namespace FaHIconAPI.Controllers
         }
 
         [HttpGet]
-        [Route("/icon/test/{testString}")]
-        public async Task<IResult> GetTestIcon(string testString)
-        {
-            var svg = $@"
-                <svg xmlns='http://www.w3.org/2000/svg' width='120' height='20'>
-                  <linearGradient id='s' x2='0' y2='100%'>
-                    <stop offset='0' stop-color='#bbb' stop-opacity='.1'/>
-                    <stop offset='1' stop-opacity='.1'/>
-                  </linearGradient>
-                  <rect rx='3' width='120' height='20' fill='#555'/>
-                  <rect rx='3' x='70' width='50' height='20' fill='#4c1'/>
-                  <rect rx='3' width='120' height='20' fill='url(#s)'/>
-                  <g fill='#fff' text-anchor='middle' font-family='DejaVu Sans,Verdana,Geneva,sans-serif' font-size='11'>
-                    <text x='35' y='15'>FAH Points</text>
-                    <text x='95' y='15'>{testString}</text>
-                  </g>
-                </svg>";
-            return Results.Text(svg, "image/svg+xml");
-        }
-
-        [HttpGet]
         [Route("/icon/FAHPoints")]
         public async Task<IResult> GetFAHIcon([FromQuery]string userId)
         {
