@@ -1,0 +1,8 @@
+﻿@baseUrl = https://localhost:7014
+@username = dansi21
+
+### Get Leaderboard Icon
+GET {{baseUrl}}/icon/leaderboard?userId={{username}}
+
+### Get Points Icon
+GET {{baseUrl}}/icon/points?userId=your_user_id
