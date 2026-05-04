@@ -3,7 +3,7 @@ name: Deploy FaHIcon
 on:
   push:
     branches:
-      - 'release/**'
+      - 'releases/**'
 
 jobs:
   deploy:
