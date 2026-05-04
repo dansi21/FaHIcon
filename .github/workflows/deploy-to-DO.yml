@@ -1,0 +1,46 @@
+name: Deploy FaHIcon
+
+on:
+  push:
+    branches:
+      - 'release/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -f FaHIconAPI/Dockerfile -t fahicon:latest .
+
+      - name: Save and compress image
+        run: docker save fahicon:latest | gzip > fahicon.tar.gz
+
+      - name: Copy image to droplet
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.DROPLET_HOST }}
+          username: ${{ secrets.DROPLET_USER }}
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          source: fahicon.tar.gz
+          target: /tmp/
+
+      - name: Deploy on droplet
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DROPLET_HOST }}
+          username: ${{ secrets.DROPLET_USER }}
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          script: |
+            docker load < /tmp/fahicon.tar.gz
+            docker stop fahicon || true
+            docker rm fahicon || true
+            docker run -d \
+              --name fahicon \
+              --restart unless-stopped \
+              -p 80:8080 \
+              fahicon:latest
+            rm /tmp/fahicon.tar.gz
