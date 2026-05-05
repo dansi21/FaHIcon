@@ -43,6 +43,6 @@ jobs:
             docker run -d \
               --name fahicon \
               --restart unless-stopped \
-              -p 80:8080 \
+              -p 8080:8080 \
               fahicon:latest
             rm /tmp/fahicon.tar.gz
