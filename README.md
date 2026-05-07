@@ -1,6 +1,6 @@
-# F@H Icon
+# F@H SVG Badge
 
-'F@H Icon' is a small tool I put together for people to be able to proudly display their 'Folding@home' stats on their GitHub profile or any other location icons are commonly found.
+'F@H SVG Badge' is a small tool I put together for people to be able to proudly display their 'Folding@home' stats on their GitHub profile or any other location icons are commonly found.
 
 Please feel free to leave any recommendations in either issues or emailed to me directly.
 
